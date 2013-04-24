@@ -1,0 +1,27 @@
+body{
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.hero-unit{
+	padding: 30px 60px;
+}
+
+.form-horizontal .control-label{
+	width: 100px;
+	text-align: left;
+	margin-left: 40px;
+}
+
+.button-group{
+	margin: 20px 0 0 30px;
+}
+
+.button-list{
+	float: left;
+	margin: 0 5px;
+}
+
+#infos{
+	margin-top: 40px;
+}

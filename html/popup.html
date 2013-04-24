@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title>Supmark Popup</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="../img/logo16.png">
+	<link href="../css/bootstrap.css" rel="stylesheet">
+	<link href="../css/popup.css" rel="stylesheet">
+</head>
+<body>
+	<div class="navbar navbar-fixed-top" >
+		<div class="navbar-inner" >
+			<div class="container-fluid" style="padding-right:5px;padding-left:0px;">
+				<ul class="nav" >
+					<li><img id="logo-supmark" src="../img/logo48.png"></li>
+					<li class="divider-vertical" > </li>
+					<li>
+						<span style="width:250px;white-space: nowrap;" class="navbar-text pull-left">
+							<i class="icon-user"></i>
+							&nbsp;<span id="user" >No account detected</span>
+						</span>
+					</li>
+					<li class="divider-vertical"> </li>
+					<li class="dropdown">
+						<a  class="dropdown-toggle" data-toggle="dropdown">
+							<i class='glyphicon-show-lines'></i> 
+							<span></span>
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a id="refresh-all">
+									<i class='icon icon-refresh'></i>
+									<span>&nbsp;Refresh All</span>
+								</a>
+							</li>
+							<li class="divider"> </li>
+							<li>
+								<a id="marks">
+									<i class='icon icon-list-alt'></i>
+									<span>&nbsp;Marks</span>
+								</a>
+							</li>
+							<li>
+								<a id="planning">
+									<i class='icon icon-calendar'></i> 
+									<span>&nbsp;Planning</span>
+								</a>
+							</li>
+							<li>
+								<a id="mates">
+									<i class='icon icon-user'></i>
+									<span>&nbsp;ClassMates</span>
+								</a>
+							</li>
+							<li>
+								<a id="summary">
+									<i class='icon icon-eye-open'></i>
+									<span>&nbsp;Summary</span>
+								</a>
+							</li>
+
+							<li>
+								<a id="internship">
+									<i class='glyphicon-briefcase'></i>
+									<span>&nbsp;Internship</span>
+								</a>
+							</li>
+
+							<li>
+								<a id="maps">
+									<i class='icon icon-globe'></i>
+									<span>&nbsp;Supinfo WorldWide</span>
+								</a>
+							</li>
+							<li class="divider"> </li>
+							<li>
+								<a id="option_button">
+									<i class='icon-cog'></i>
+									<span>&nbsp;Options</span>
+								</a>
+							</li>			
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a  class="dropdown-toggle" data-toggle="dropdown">
+							<i class='icon-star'></i> 
+							<span></span>
+							<b class="caret"></b>
+						</a>
+		
+						<ul class="dropdown-menu">
+							<li>
+								<a id="apple">
+									<i class='icon glyphicon-link'></i>
+									<span>&nbsp;Apple Store Supinfo</span>
+								</a>
+							</li>
+							<li>
+								<a id="campusbooster">
+									<i class='icon glyphicon-link'></i>
+									<span>&nbsp;Campus Booster</span>
+								</a>
+							</li>
+							<li>
+								<a id="courses">
+									<i class='icon glyphicon-link'></i>
+									<span>&nbsp;Courses</span>
+								</a>
+							</li>
+							<li>
+								<a id="dreamspark">
+									<i class='icon glyphicon-link'></i>
+									<span>&nbsp;Dreamspark Premium</span>
+								</a>
+							</li>
+							<li>
+								<a id="exam-vouchers">
+									<i class='glyphicon-link'></i>
+									<span>&nbsp;Exam Vouchers</span>
+								</a>
+							</li>
+							<li>
+								<a id="libraries">
+									<i class='glyphicon-link'></i>
+									<span>&nbsp;Libraries</span>
+								</a>
+							</li>
+							<li>
+								<a id="licensing">
+									<i class='glyphicon-link'></i>
+									<span>&nbsp;Licensing</span>
+								</a>
+							</li>
+							<li>
+								<a id="msdnaa">
+									<i class='glyphicon-link'></i>
+									<span>&nbsp;MSDNAA</span>
+								</a>
+							</li>
+							<li>
+								<a id="outlook">
+									<i class='glyphicon-link'></i>
+									<span>&nbsp;Outlook</span>
+								</a>
+							</li>
+							<li>
+								<a id="spr">
+									<i class='glyphicon-link'></i>
+									<span>&nbsp;SPR</span>
+								</a>
+							</li>
+							<li>
+								<a id="documents">
+									<i class='glyphicon-link'></i>
+									<span>&nbsp;Schooling Documents</span>
+								</a>
+							</li>
+							<li>
+								<a id="vmware">
+									<i class='glyphicon-link'></i>
+									<span>&nbsp;VMWare Licensing</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+		            <li class="dropdown">
+		            	<a href="#" id="notif_button" class="dropdown-toggle" data-toggle="dropdown">
+		            	 	<span id="notifcounter" style="display:none;" class="badge badge-important">0</span>
+		            	 	<i class='icon-bell'></i>
+		            	 	<span></span>
+		            	 	<b class="caret"></b>
+		            	</a>
+		             	<ul style="padding:20px;width:250px;font-size:12px;line-height:12px;" id="notification_list" class="dropdown-menu">  
+			      	   		<li class="divider"> </li>
+			        	</ul>
+		            </li>
+		             <li class="divider-vertical"> </li>
+	          	</ul>
+	          	<span class="pull-right" >
+	          		&nbsp;
+					<a class="btn  btn-danger" id="close_button">
+						<i class="icon icon-white icon-remove"></i> 
+					</a>
+				</span>
+			
+
+				<div class="btn-group pull-right">
+					<ul style="padding-left:20px" id="notification-list" class="dropdown-menu">  
+						<li class="divider"></li>
+					</ul>
+		        </div>
+			</div>
+		</div>
+	</div>		
+
+	<div id="mark-container" class="span10">
+		<div id="spinner">
+			<div class="bar1"></div>
+			<div class="bar2"></div>
+			<div class="bar3"></div>
+			<div class="bar4"></div>
+			<div class="bar5"></div>
+			<div class="bar6"></div>
+			<div class="bar7"></div>
+			<div class="bar8"></div>
+		</div>
+	</div>
+
+	<div  class="navbar navbar-inner navbar-fixed-bottom" >
+		<div >
+			<img id="facebook" style="position:absolute;left:15px;top:-2px;" src="../img/facebook.png">
+			<div style="position:absolute;left:140px;top:-3px;">
+				<div  id="parent-bar" style="" class="progress progress-danger progress-striped" >
+					<div style="" class="bar" id="progress-bar" ></div>
+				</div>
+			</div>
+			<div style="position:absolute;left:450px;top:10px;">
+				<i class="icon-ok"> </i>
+				<b>
+					&nbsp;<span id="owned_credits">0</span> / <span id="total_credits">0</span>
+				</b>
+				&nbsp;Crédits
+				&nbsp;Validation : <span id="percent60">0</span>%
+				&nbsp;Total : <span id="percent">0</span>%
+			</div>
+		</div>
+	</div>	
+
+	<div id="fb-root"></div>
+
+	<script type="text/javascript" src="../js/jquery.js"></script>	
+	<script type="text/javascript" src="../js/bootstrap.js"></script>
+	<script type="text/javascript" src="../js/popup.js"></script>
+	
+</body>
+</html>

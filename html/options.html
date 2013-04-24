@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title>Supmark Configuration Page</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="../img/icon.png">
+	<link href="../css/bootstrap.css" rel="stylesheet">
+	<link href="../css/options.css" rel="stylesheet">
+	<link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.24.custom.css" rel="stylesheet" />
+</head>
+<body>
+
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<a class="brand" href="#">
+					Supmark Configuration Page
+				</a>
+				<div class="nav-collapse">
+					<ul class="nav">
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div  class="container" style="width:600px">
+		<div class="hero-unit">
+			<div style="text-align: center;" >
+				<div>
+					<img style="display: inline; vertical-align: middle;" src="../img/logo128.png">
+					<h1 style="display: inline; vertical-align: middle;" >SupMark</h1>
+				</div>
+				<div >
+					<div style="">
+						Version 
+						<span id="version"> </span>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a id="facebook" style="cursor:  pointer;">
+							<img style="" id="facebook" style="" src="../img/facebook.png"> 
+							<span style="">&nbsp;Please like our facebook page. </span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="hero-unit">
+   			<div class="form-horizontal">
+   				<legend>Options</legend>
+				<div class="control-group">
+					<label class="control-label" for="focusedInput">Campus ID</label>
+					<div class="controls">
+						<input class="input-xlarge focused"  id="campusId"   type="text" value="">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" >Password</label>
+					<div class="controls">
+						<input class="input-xlarge focused" id="password"  type="password" value="">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" >Name</label>
+					<div class="controls">
+						<input class="input-xlarge disabled" id="username"  type="text" placeholder="" disabled="">
+					</div>
+				</div>
+				<div class="control-group button-group">
+					<button  id="reset" class="btn btn-large pull-right button-list">Reset account</button>
+					<button  id="test" class="btn btn-large pull-right button-list">Test</button>
+					<button  id="save" class="btn btn-primary btn-large pull-right button-list">Save</button>
+				</div>
+				<legend>Advanced Options</legend>
+				<div class="control-group">	 
+					<label class="control-label" >Default Page</label>
+					<div class="controls">
+						<select id="defaultPage" class="span3">
+							<option value="marks" >Marks</option>
+							<option value="planning" >Planning</option>
+							<option value="mates" >Classmates</option>
+							<option value="summary" >Summary</option>
+							<option value="internship" >Internship</option>
+							<option value="maps" >Supinfo WorldWide</option>
+						</select>
+					</div>
+				</div>
+				<!--<div class="control-group">	 
+					<label class="control-label" >Refresh time (minutes)</label>
+					<div class="controls">
+						<select id="timer" class="span3">
+							<option value="1" >1</option>
+							<option value="5" >5</option>
+							<option value="15" >15</option>
+							<option value="30" >30</option>
+							<option value="45" >45</option>
+							<option value="60" >60</option>
+						</select>
+						<div id="slider"></div>
+						<input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" />
+					</div>
+
+				</div>-->
+				<div id="infos">
+					&nbsp;
+				</div>
+			</div>
+			<br/>
+		</div>
+		<hr/>
+		<footer>
+			<span>&copy; Supmark 2012</span>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.js"></script>
+	<script type="text/javascript" src="../js/options.js"></script>
+
+</body>
+</html>
