@@ -17,16 +17,18 @@
 
     </head>
     <body>
-	
-		<div class="header"></div>
+        
+        <a href="#showAbout" id="lnkAbout">A PROPOS</a>
+        <div id="divClient">
+            Identifiant : <input type="text" id="txtIdClient" placeholder="identifiant du client">
+            &nbsp; Client : <input type="text" id="txtNomClient" placeholder="nom du client">
+            &nbsp; Remarque : <input type="text" id="txtRemarqueClient" placeholder="remarque sur le client" size="50">
+            &nbsp; <button id="cmdAddClient">Ajouter Client</button>
+            <br>
+            <ul id="listeClient"></ul>
+        </div>
 
-		<div class="container">
-		
-			<div class="row">
-				<div id="content" class="span12>"></div>
-			</div>
-
-		</div>
+        <div id="divAbout">Ceci est un tuto sur BackBone</div>
 
 		<script src="js/vendor/jquery-2.0.2.min.js"></script>
 		<script src="js/vendor/underscore-min.js"></script>
