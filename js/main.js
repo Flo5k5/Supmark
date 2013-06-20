@@ -78,11 +78,13 @@ $(function() {
         routes: {
             "" : "root",
             "showAbout" : "showAbout",
-            "hideAbout" : "hideAbout"
+            "hideAbout" : "hideAbout",
+            "login" : "login"
         },
 
         root : function() {
             document.title = "Vous êtes à la racine ...";
+            $("#login").hide();
         },
 
         showAbout : function () {
@@ -95,6 +97,15 @@ $(function() {
             console.log("hide about ...");
             $("#divAbout").hide();
             $("#lnkAbout").attr("href","#showAbout");
+        },
+
+        login : function () {
+            console.log("Action : login");
+            $("#divAbout").hide();
+            $("#divClient").hide();
+            $("#lnkAbout").hide();
+            $("#login").fadeIn();
+
         }
 
     });
