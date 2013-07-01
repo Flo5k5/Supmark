@@ -3,160 +3,233 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
 		
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/main.css" rel="stylesheet">
+		<style type="text/css">
+			html,
+			body,
+			.max-height {
+				height: 100%;
+				/*width: 100%;*/
+				margin: 0 auto;
+				padding: 0;
+				/* The html and body elements cannot have any padding or margin. */
+			}
 
-    </head>
-    <body>
-        
-        <a href="#showAbout" id="lnkAbout">A PROPOS</a>
-        <a href="#login" id="lnkLogin">Login</a>
-        <div id="divClient">
-            Identifiant : <input type="text" id="txtIdClient" placeholder="identifiant du client">
-            &nbsp; Client : <input type="text" id="txtNomClient" placeholder="nom du client">
-            &nbsp; Remarque : <input type="text" id="txtRemarqueClient" placeholder="remarque sur le client" size="50">
-            &nbsp; <button id="cmdAddClient">Ajouter Client</button>
-            <br>
-            <ul id="listeClient"></ul>
-        </div>
+			body{
+				padding: 50px 0;
+			}
 
-        <div id="divAbout">Ceci est un tuto sur BackBone</div>
+			/*.navbar{
+				margin: 0;
+			}
 
-        <div id="login">
+			.sidebar-nav {
+				padding: 9px 0;
+			}*/
 
-            <div class="navbar navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </a>
-                        <a class="brand" href="#">
-                            Supmark Configuration Page
-                        </a>
-                        <div class="nav-collapse">
-                            <ul class="nav">
+			.central{
+				/*margin: -50px 0;*/
+			}
 
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			@media (max-width: 980px) {
+				/* Enable use of floated navbar text */
+				.navbar-text.pull-right {
+					float: none;
+					padding-left: 5px;
+					padding-right: 5px;
+				}
+			}
 
-            <div  class="container" style="width:600px">
-                <div class="hero-unit">
-                    <div style="text-align: center;" >
-                        <div>
-                            <img style="display: inline; vertical-align: middle;" src="../img/logo128.png">
-                            <h1 style="display: inline; vertical-align: middle;" >SupMark</h1>
-                        </div>
-                        <div >
-                            <div style="">
-                                Version 
-                                <span id="version"> </span>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a id="facebook" style="cursor:  pointer;">
-                                    <img style="" id="facebook" style="" src="../img/facebook.png"> 
-                                    <span style="">&nbsp;Please like our facebook page. </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+		</style>
+	</head>
+	<body>
+		
+	<div class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="navbar-inner">
+		<div class="container-fluid">
+			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		  <a class="brand" href="#">Project name</a>
+		  <div class="nav-collapse collapse">
+			<p class="navbar-text pull-right">
+				Logged in as <a href="#" class="navbar-link">Username</a>
+			</p>
+			<ul class="nav">
+				<li class="active"><a href="#root">Home</a></li>
+				<li><a href="#showAbout" id="lnkAbout">A PROPOS</a></li>
+				<li><a href="#login" id="lnkLogin">Login</a></li>
+				<li><a href="#gmaps" id="lnkGmaps">Maps</a></li>
+			</ul>
+		  </div><!--/.nav-collapse -->
+		</div>
+	  </div>
+	</div>
 
-                <div class="hero-unit">
-                    <div class="form-horizontal">
-                        <legend>Options</legend>
-                        <div class="control-group">
-                            <label class="control-label" for="focusedInput">Campus ID</label>
-                            <div class="controls">
-                                <input class="input-xlarge focused"  id="campusId"   type="text" value="">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" >Password</label>
-                            <div class="controls">
-                                <input class="input-xlarge focused" id="password"  type="password" value="">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" >Name</label>
-                            <div class="controls">
-                                <input class="input-xlarge disabled" id="username"  type="text" placeholder="" disabled="">
-                            </div>
-                        </div>
-                        <div class="control-group button-group">
-                            <button  id="reset" class="btn btn-large pull-right button-list">Reset account</button>
-                            <button  id="test" class="btn btn-large pull-right button-list">Test</button>
-                            <button  id="save" class="btn btn-primary btn-large pull-right button-list">Save</button>
-                        </div>
-                        <legend>Advanced Options</legend>
-                        <div class="control-group">  
-                            <label class="control-label" >Default Page</label>
-                            <div class="controls">
-                                <select id="defaultPage" class="span3">
-                                    <option value="marks" >Marks</option>
-                                    <option value="planning" >Planning</option>
-                                    <option value="mates" >Classmates</option>
-                                    <option value="summary" >Summary</option>
-                                    <option value="internship" >Internship</option>
-                                    <option value="maps" >Supinfo WorldWide</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!--<div class="control-group">  
-                            <label class="control-label" >Refresh time (minutes)</label>
-                            <div class="controls">
-                                <select id="timer" class="span3">
-                                    <option value="1" >1</option>
-                                    <option value="5" >5</option>
-                                    <option value="15" >15</option>
-                                    <option value="30" >30</option>
-                                    <option value="45" >45</option>
-                                    <option value="60" >60</option>
-                                </select>
-                                <div id="slider"></div>
-                                <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" />
-                            </div>
+	<div class="container-fluid max-height">
+		<div class="row-fluid max-height">
+			<div id="gmaps" class="span12 max-height" ></div>
+		</div><!--/row-->
 
-                        </div>-->
-                        <div id="infos">
-                            &nbsp;
-                        </div>
-                    </div>
-                    <br/>
-                </div>
-                <hr/>
-                <footer>
-                    <span>&copy; Supmark 2012</span>
-                </footer>
-            </div>
+	</div><!--/.fluid-container-->
 
-        </div>
+	<div class="navbar navbar-inverse navbar-fixed-bottom">
+	  <div class="navbar-inner">
+		<div class="container-fluid">
+			<a class="brand" href="#">Project name</a>
+		</div>
+	  </div>
+	</div>
+		
+		<!--<div id="divClient">
+			Identifiant : <input type="text" id="txtIdClient" placeholder="identifiant du client">
+			&nbsp; Client : <input type="text" id="txtNomClient" placeholder="nom du client">
+			&nbsp; Remarque : <input type="text" id="txtRemarqueClient" placeholder="remarque sur le client" size="50">
+			&nbsp; <button id="cmdAddClient">Ajouter Client</button>
+			<br>
+			<ul id="listeClient"></ul>
+		</div>
+
+		<div id="divAbout">Ceci est un tuto sur BackBone</div>
+
+		<!--<div id="login">
+
+			<div class="navbar navbar-fixed-top">
+				<div class="navbar-inner">
+					<div class="container">
+						<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</a>
+						<a class="brand" href="#">
+							Supmark Configuration Page
+						</a>
+						<div class="nav-collapse">
+							<ul class="nav">
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div  class="container" style="width:600px">
+				<div class="hero-unit">
+					<div style="text-align: center;" >
+						<div>
+							<img style="display: inline; vertical-align: middle;" src="../img/logo128.png">
+							<h1 style="display: inline; vertical-align: middle;" >SupMark</h1>
+						</div>
+						<div >
+							<div style="">
+								Version 
+								<span id="version"> </span>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a id="facebook" style="cursor:  pointer;">
+									<img style="" id="facebook" style="" src="../img/facebook.png"> 
+									<span style="">&nbsp;Please like our facebook page. </span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="hero-unit">
+					<div class="form-horizontal">
+						<legend>Options</legend>
+						<div class="control-group">
+							<label class="control-label" for="focusedInput">Campus ID</label>
+							<div class="controls">
+								<input class="input-xlarge focused"  id="campusId"   type="text" value="">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" >Password</label>
+							<div class="controls">
+								<input class="input-xlarge focused" id="password"  type="password" value="">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" >Name</label>
+							<div class="controls">
+								<input class="input-xlarge disabled" id="username"  type="text" placeholder="" disabled="">
+							</div>
+						</div>
+						<div class="control-group button-group">
+							<button  id="reset" class="btn btn-large pull-right button-list">Reset account</button>
+							<button  id="test" class="btn btn-large pull-right button-list">Test</button>
+							<button  id="save" class="btn btn-primary btn-large pull-right button-list">Save</button>
+						</div>
+						<legend>Advanced Options</legend>
+						<div class="control-group">  
+							<label class="control-label" >Default Page</label>
+							<div class="controls">
+								<select id="defaultPage" class="span3">
+									<option value="marks" >Marks</option>
+									<option value="planning" >Planning</option>
+									<option value="mates" >Classmates</option>
+									<option value="summary" >Summary</option>
+									<option value="internship" >Internship</option>
+									<option value="maps" >Supinfo WorldWide</option>
+								</select>
+							</div>
+						</div>
+						<div class="control-group">  
+							<label class="control-label" >Refresh time (minutes)</label>
+							<div class="controls">
+								<select id="timer" class="span3">
+									<option value="1" >1</option>
+									<option value="5" >5</option>
+									<option value="15" >15</option>
+									<option value="30" >30</option>
+									<option value="45" >45</option>
+									<option value="60" >60</option>
+								</select>
+								<div id="slider"></div>
+								<input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" />
+							</div>
+
+						</div>
+						<div id="infos">
+							&nbsp;
+						</div>
+					</div>
+					<br/>
+				</div>
+				<hr/>
+				<footer>
+					<span>&copy; Supmark 2012</span>
+				</footer>
+			</div>
+
+		</div>-->
 
 		<script src="js/vendor/jquery-2.0.2.min.js"></script>
 		<script src="js/vendor/underscore-min.js"></script>
 		<script src="js/vendor/backbone-min.js"></script>
 
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+		<script src="js/plugins.js"></script>
+		<script src="js/main.js"></script>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. 
-        <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src='//www.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script> -->
-    </body>
+		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. 
+		<script>
+			var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+			(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+			g.src='//www.google-analytics.com/ga.js';
+			s.parentNode.insertBefore(g,s)}(document,'script'));
+		</script> -->
+	</body>
 </html>
