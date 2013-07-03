@@ -1,136 +1,327 @@
+/*
 window.GMaps = {
-	_el : "gmaps",
-	_marker : null,
-	_api_key : "AIzaSyBBvFQ4cJF4FegZ1vVgXrrJZ__djvMPdcE",
-	_position : null,
-	_map : null,
-	_kml: "https://maps.google.fr/maps/ms?ie=UTF8&t=h&oe=UTF8&authuser=0&msa=0&output=kml&msid=212676093823261248407.000465792f3231179dcb6",
 
+    _el : "gmaps",
+    _marker : null,
+    _api_key : "",
+    _position : null,
+    _map : null,
+    _kml : "https://maps.google.fr/maps/ms?ie=UTF8&t=h&oe=UTF8&authuser=0&msa=0&output=kml&msid=212676093823261248407.000465792f3231179dcb6",
 
-	init: function(el){
-		
-		if(typeof el != undefined){
-			this._el = $('#'+el);
-		} else if (typeof this._el != undefined){
-			this._el = $('#'+this._el);
-		} else {
-			console.error("No element was defined to draw map");
-			return false;
-		}
+    init : function(el){
+
+        if(typeof el != 'undefined'){
+            GMaps._el = $('#'+el);
+        } else if (typeof GMaps._el != 'undefined'){
+            GMaps._el = $('#'+GMaps._el);
+        } else {
+            console.error("No element was defined to draw map");
+            return false;
+        }
+
+        var script = document.createElement("script");
+		script.type = "text/javascript";
+		//script.src = "https://maps.googleapis.com/maps/api/js?key="+GMaps._api_key+"&sensor=false&callback=GMaps.load";
+		script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=GMaps.load';
+		document.body.appendChild(script);
+    },
+
+    load : function(){
+        navigator.geolocation.getCurrentPosition(GMaps.success, GMaps.error, { enableHighAccuracy: true, timeout: 10000, maximumAge: Infinity });
+    },
+
+    success : function(position){
+        //console.log(position);
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        console.log(lat);
+        console.log(lng);
+
+        GMaps._position = new google.maps.LatLng(lat, lng);
+
+        var mapOptions = {
+            zoom: 7,
+            center: GMaps._position,
+            disableDefaultUI: true,
+            mapTypeControl: true,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        }
+
+        GMaps.draw(mapOptions);
+    },
+
+    error : function(error){
+        console.log('There was an error with GMaps : ');
+        console.log(error);
+
+        GMaps._position = new google.maps.LatLng(25.165173,-23.90625);
+
+        var mapOptions = {
+            zoom: 2,
+            center: GMaps._position,
+            disableDefaultUI: true,
+            mapTypeControl: true,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        }
+
+        GMaps.draw(mapOptions);
+    },
+
+    draw : function(mapOptions){
+        GMaps._map = new google.maps.Map(GMaps._el, mapOptions);
+
+        GMaps._marker = new google.maps.Marker({
+            map: GMaps._map,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            title: "You are here",
+            position: GMaps._position
+        });
+
+        google.maps.event.addListener(GMaps._marker, 'dragend', function(){
+            GMaps.geocodePosition(GMaps._marker.getPosition());
+        });
+    },
+
+    setKmlLayer : function(){
+        var ctaLayer = new google.maps.KmlLayer(
+            GMaps._kml,
+            {   
+                preserveViewport: true,
+                suppressInfoWindows: false
+            }
+        );
+
+        ctaLayer.setMap(GMaps._map);
+    },
+
+    setWeatherLayer : function(){
+        var weatherLayer = new google.maps.weather.WeatherLayer({
+          temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS
+        });
+
+        weatherLayer.setMap(GMaps._map);
+    },
+
+    setTransitLayer : function(){
+        var transitLayer = new google.maps.TransitLayer();
+        transitLayer.setMap(GMaps._map);
+    },
+
+    geocodePosition : function(markerPos){
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode(
+            {
+                latLng: markerPos
+            }, 
+            function(results, status){
+                if (status == google.maps.GeocoderStatus.OK){
+                    console.log("Results : ", results);
+                    console.log("Adresse : ", results[0].formatted_address);
+                    console.log("Latitude : ", results[0].geometry.location.jb);
+                    console.log("Longitude : ", results[0].geometry.location.kb);
+                    //$("#mapSearchInput").val(results[0].formatted_address);
+                    //$("#mapErrorMsg").hide(100);
+                } else {
+                    console.log("Cannot determine address at this location "+status);
+                    //$("#mapErrorMsg").html('Cannot determine address at this location.'+status).show(100);
+                }
+            }
+        );
+    }
+}*/
+
+window.GMaps = {
+	_position : "",
+	_lat : "48.85806239999999",
+	_lng : "2.295147199999974",
+	_kml : "https://maps.google.fr/maps/ms?ie=UTF8&t=h&oe=UTF8&authuser=0&msa=0&output=kml&msid=212676093823261248407.000465792f3231179dcb6",
+	_marker : "",
+	_map : "",
+	_geocoder : "",
+	_api_key : "",
+	_el : document.getElementById("gmaps"),
+
+	init : function(el) {
+
+		if(typeof el != 'undefined'){
+            GMaps._el = document.getElementById(el);
+        }
 
 		var script = document.createElement("script");
 		script.type = "text/javascript";
-		script.src = "https://maps.googleapis.com/maps/api/js?key="+this._api_key+"&sensor=false&libraries=weather&callback=GMaps.load";
-		window.
+		//script.src = "https://maps.googleapis.com/maps/api/js?key="+GMaps._api_key+"&sensor=false&callback=GMaps.load";
+		script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=weather&callback=GMaps.load';
 		document.body.appendChild(script);
 	},
 
-	load: function(){
-		navigator.geolocation.getCurrentPosition(this.success, this.error, { enableHighAccuracy: true, timeout: 10000, maximumAge: Infinity });
-	},
+	load : function() {
 
-	success: function(position){
-		//console.log(position);
-		var lat = position.coords.latitude;
-		var lng = position.coords.longitude;
-		console.log(lat);
-		console.log(lng);
-
-		this._position = new google.maps.LatLng(lat, lng);
+		GMaps._position = new google.maps.LatLng(GMaps._lat, GMaps._lng);
 
 		var mapOptions = {
 			zoom: 7,
-			center: this._position,
+			center: GMaps._position,
 			disableDefaultUI: true,
 			mapTypeControl: true,
 			mapTypeId: google.maps.MapTypeId.HYBRID
 		}
-
-		this.draw(mapOptions);
+		
+		GMaps.drawMap(mapOptions);
 	},
 
-	error: function(error){
-		console.log('There was an error with GMaps : ');
-		console.log(error);
+	drawMap : function(mapOptions){
+	    GMaps._map = new google.maps.Map(GMaps._el, mapOptions);
 
-		this._position = new google.maps.LatLng(25.165173,-23.90625);
+	    GMaps._marker = new google.maps.Marker({
+	        map: GMaps._map,
+	        draggable: true,
+	        animation: google.maps.Animation.DROP,
+	        title: "Drag me",
+	        position: GMaps._position
+	    });
 
-		var mapOptions = {
-			zoom: 2,
-			center: this._position,
-			disableDefaultUI: true,
-			mapTypeControl: true,
-			mapTypeId: google.maps.MapTypeId.HYBRID
-		}
+	    google.maps.event.addListener(GMaps._marker, 'dragend', function(){
+	        GMaps.geocodePosition(GMaps._marker.getPosition());
+	    });
 
-		this.draw(mapOptions);
+	    GMaps._geocoder = new google.maps.Geocoder();
 	},
 
-	draw: function(mapOptions){
-		this._map = new google.maps.Map(this._el, mapOptions);
-
-		marker = new google.maps.Marker({
-			map: this._map,
-			draggable: true,
-			animation: google.maps.Animation.DROP,
-			title: "You are here",
-			position: this._position
-		});
-
-		google.maps.event.addListener(marker, 'dragend', function(){
-			this.geocodePosition(marker.getPosition());
-		});
+	centerMap : function(position){
+		GMaps._map.setCenter(position);
 	},
 
-	setKmlLayer: function(){
-		var ctaLayer = new google.maps.KmlLayer(
-			this._kml,
-			{   
-				preserveViewport: true,
-				suppressInfoWindows: false
+	setKmlLayer : function(){
+	    var ctaLayer = new google.maps.KmlLayer(
+	        GMaps._kml,
+	        {   
+	            preserveViewport: true,
+	            suppressInfoWindows: false
+	        }
+	    );
+
+	    ctaLayer.setMap(GMaps._map);
+	},
+
+	setWeatherLayer : function(){
+	    var weatherLayer = new google.maps.weather.WeatherLayer({
+    		temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS
+  		});
+
+	    weatherLayer.setMap(GMaps._map);
+	},
+
+	setTransitLayer : function(){
+	    var transitLayer = new google.maps.TransitLayer();
+	    transitLayer.setMap(GMaps._map);
+	},
+
+	setBikeLayer : function(){
+	    var bikeLayer = new google.maps.BicyclingLayer();
+  		bikeLayer.setMap(GMaps._map);
+	},
+
+	setTrafficLayer : function(){
+	    var trafficLayer = new google.maps.TrafficLayer();
+  		trafficLayer.setMap(GMaps._map);
+	},
+
+	setCloudLayer : function(){
+	    var cloudLayer = new google.maps.weather.CloudLayer();
+  		cloudLayer.setMap(GMaps._map);
+	},
+
+	geocodePosition : function(markerPos){
+	    
+	    GMaps._geocoder.geocode(
+	        {
+	            latLng: markerPos
+	        }, 
+	        function(results, status){
+	            if (status == google.maps.GeocoderStatus.OK){
+	                console.log("Results : ", results);
+	                console.log("Adresse : ", results[0].formatted_address);
+	                console.log("Latitude : ", results[0].geometry.location.lat());
+	                console.log("Longitude : ", results[0].geometry.location.lng());
+	                //$("#mapSearchInput").val(results[0].formatted_address);
+	                //$("#mapErrorMsg").hide(100);
+	            } else {
+	                console.error("Cannot determine address at this location "+status);
+	                //$("#mapErrorMsg").html('Cannot determine address at this location.'+status).show(100);
+	            }
+	        }
+	    );
+	},
+
+	changeZoom : function(zoomValue){
+		/*console.log("Zoom : ", GMaps._map.getZoom());
+
+		if(GMaps._map.getZoom() > zoomValue){
+			for (var i = GMaps._map.getZoom(); i >= zoomValue; i--) {
+				window.setTimeout( 
+					( function(zoom){ 
+						return function(){ 
+							GMaps._map.setZoom(zoom);
+							console.log(zoom);
+						}; 
+					} )( i ),
+					5000
+				);
 			}
-		);
+		} else if(GMaps._map.getZoom() < zoomValue){
+			for (var i = GMaps._map.getZoom(); i <= zoomValue; i++) {
+				window.setTimeout( 
+					( function(zoom){ 
+						return function(){ 
+							GMaps._map.setZoom(zoom);
+							console.log(zoom);
+						}; 
+					} )( i ),
+					5000
+				);
+			}
+		}
+		console.log("Zoom : ", GMaps._map.getZoom());*/
 
-		ctaLayer.setMap(this._map);
+		GMaps._map.setZoom(zoomValue);
 	},
 
-	setWeatherLayer: function(){
-		var weatherLayer = new google.maps.weather.WeatherLayer({
-		  temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS
-		});
+	geocodeAddress : function(address) {
 
-		weatherLayer.setMap(this._map);
-	},
+		/* Appel au service de geocodage avec l'adresse en paramètre */
+		GMaps._geocoder.geocode( { 'address': address}, function(results, status) {
+			/* Si l'adresse a pu être géolocalisée */
+			if (status == google.maps.GeocoderStatus.OK) {
+				/* Récupération de sa latitude et de sa longitude */
 
-	setTransitLayer: function(){
-		var transitLayer = new google.maps.TransitLayer();
-		transitLayer.setMap(this._map);
-	},
+				console.log("Latitude : ", results[0].geometry.location.lat());
+	            console.log("Longitude : ", results[0].geometry.location.lng());
 
-	geocodePosition: function(markerPos) 
-	{
-		geocoder = new google.maps.Geocoder();
-		geocoder.geocode
-		({
-			latLng: markerPos
-		}, 
-		function(results, status){
-			if (status == google.maps.GeocoderStatus.OK){
-				console.log("Results : ", results);
-				console.log("Adresse : ", results[0].formatted_address);
-				console.log("Latitude : ", results[0].geometry.location.jb);
-				console.log("Longitude : ", results[0].geometry.location.kb);
-				//$("#mapSearchInput").val(results[0].formatted_address);
-				//$("#mapErrorMsg").hide(100);
+				GMaps.centerMap(results[0].geometry.location);
+
+				GMaps.changeZoom(14);
+
+				GMaps._marker.setMap(null);
+
+				/* Affichage du marker */
+				GMaps._marker = new google.maps.Marker({
+					map: GMaps._map,
+					draggable: true,
+	       			animation: google.maps.Animation.DROP,
+					position: results[0].geometry.location
+				});
+
+				google.maps.event.addListener(GMaps._marker, 'dragend', function(){
+			        GMaps.geocodePosition(GMaps._marker.getPosition());
+			    });
+
 			} else {
-				console.log("Cannot determine address at this location "+status);
-				//$("#mapErrorMsg").html('Cannot determine address at this location.'+status).show(100);
+				console.error("Cannot find this address "+status);
 			}
-		}
-		);
+		});
 	}
-
-};
+}
 
 $(function() {
 
@@ -249,7 +440,7 @@ $(function() {
 			$("#divClient").hide();
 			$("#lnkAbout").hide();
 			$("#login").hide();
-			gm = new GMaps();
+			GMaps.init();
 
 		}
 
