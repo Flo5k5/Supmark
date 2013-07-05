@@ -174,13 +174,13 @@ window.GMaps = {
 
 	load : function(position) {
 		var zoom = 7;
-		if(typeof position != 'undefined'){
+		if( typeof position != 'undefined' && typeof position.coords != 'undefined' ){
+			console.log("Geolocation enabled : ", position);
             GMaps._position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            zoom = 14;
-            console.log("Geolocation enabled : ", position);
+            zoom = 14;     
         } else {
+        	console.log("Geolocation disabled");
 			GMaps._position = new google.maps.LatLng(GMaps._lat, GMaps._lng);
-			console.log("Geolocation disabled");
 		}
 
 		var mapOptions = {
@@ -201,7 +201,7 @@ window.GMaps = {
 	        map: GMaps._map,
 	        draggable: true,
 	        animation: google.maps.Animation.DROP,
-	        title: "Drag me",
+	        //title: "Drag me",
 	        position: GMaps._position
 	    });
 
