@@ -141,26 +141,50 @@ window.GMaps = {
 	_geocoder : "",
 	_api_key : "",
 	_el : document.getElementById("gmaps"),
+	_elJq : $("#gmaps"),
 
 	init : function(el) {
-
 		if(typeof el != 'undefined'){
-            GMaps._el = document.getElementById(el);
+            GMaps._el =  document.getElementById(el);
+            GMaps._elJq =  $("#"+el);
         }
 
-		var script = document.createElement("script");
-		script.type = "text/javascript";
-		//script.src = "https://maps.googleapis.com/maps/api/js?key="+GMaps._api_key+"&sensor=false&callback=GMaps.load";
-		script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=weather&callback=GMaps.load';
-		document.body.appendChild(script);
+		if(typeof google === 'undefined'){
+			var script = document.createElement("script");
+			script.type = "text/javascript";
+			//script.src = "https://maps.googleapis.com/maps/api/js?key="+GMaps._api_key+"&sensor=false&callback=GMaps.load";
+			script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=weather&callback=GMaps.getUserLocation';
+			document.body.appendChild(script);
+		} else {
+			GMaps.load();
+		}
+	},
+	
+	getUserLocation : function() {
+		if(navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				GMaps.load,
+				GMaps.load,
+				{ enableHighAccuracy: true, timeout: 10000, maximumAge: Infinity }
+			);
+		} else {
+			GMaps.load()
+		}
 	},
 
-	load : function() {
-
-		GMaps._position = new google.maps.LatLng(GMaps._lat, GMaps._lng);
+	load : function(position) {
+		var zoom = 7;
+		if(typeof position != 'undefined'){
+            GMaps._position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            zoom = 14;
+            console.log("Geolocation enabled : ", position);
+        } else {
+			GMaps._position = new google.maps.LatLng(GMaps._lat, GMaps._lng);
+			console.log("Geolocation disabled");
+		}
 
 		var mapOptions = {
-			zoom: 7,
+			zoom: zoom,
 			center: GMaps._position,
 			disableDefaultUI: true,
 			mapTypeControl: true,
@@ -233,22 +257,25 @@ window.GMaps = {
 	},
 
 	geocodePosition : function(markerPos){
-	    
+
 	    GMaps._geocoder.geocode(
 	        {
 	            latLng: markerPos
 	        }, 
 	        function(results, status){
 	            if (status == google.maps.GeocoderStatus.OK){
+
+	            	/*$("#modalDiv .addressInput").val(results[0].formatted_address);
+					$("#modalDiv .latitudeInput").val(results[0].geometry.location.lat());
+					$("#modalDiv .longitudeInput").val(results[0].geometry.location.lng());*/
+
 	                console.log("Results : ", results);
 	                console.log("Adresse : ", results[0].formatted_address);
 	                console.log("Latitude : ", results[0].geometry.location.lat());
 	                console.log("Longitude : ", results[0].geometry.location.lng());
-	                //$("#mapSearchInput").val(results[0].formatted_address);
-	                //$("#mapErrorMsg").hide(100);
+
 	            } else {
 	                console.error("Cannot determine address at this location "+status);
-	                //$("#mapErrorMsg").html('Cannot determine address at this location.'+status).show(100);
 	            }
 	        }
 	    );
@@ -295,8 +322,13 @@ window.GMaps = {
 			if (status == google.maps.GeocoderStatus.OK) {
 				/* Récupération de sa latitude et de sa longitude */
 
+				console.log("Result : ", results);
 				console.log("Latitude : ", results[0].geometry.location.lat());
 	            console.log("Longitude : ", results[0].geometry.location.lng());
+
+				/*$("#modalDiv .addressInput").val(results[0].formatted_address);
+				$("#modalDiv .latitudeInput").val(results[0].geometry.location.lat());
+				$("#modalDiv .longitudeInput").val(results[0].geometry.location.lng());*/
 
 				GMaps.centerMap(results[0].geometry.location);
 
@@ -319,7 +351,16 @@ window.GMaps = {
 			} else {
 				console.error("Cannot find this address "+status);
 			}
+
 		});
+	},
+
+	resizeInModal : function(){
+		GMaps._elJq.height( ( $(window).height() - ( $('#modalDiv').outerHeight() - $('#modalDiv .modal-body').height() ) ) );
+		if( GMaps._elJq.height() >= $('#modalDiv .modal-body').height() ){
+			GMaps._elJq.height( ( $('#modalDiv .modal-body').height() - $('.form-geo').outerHeight() ) - 65 );
+		}
+		GMaps._elJq.width( $('#modalDiv .modal-body').width() );
 	}
 }
 
